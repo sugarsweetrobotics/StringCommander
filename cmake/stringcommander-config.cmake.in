@@ -1,0 +1,54 @@
+# StringCommander CMake config file
+#
+# This file sets the following variables:
+# StringCommander_FOUND - Always TRUE.
+# StringCommander_INCLUDE_DIRS - Directories containing the StringCommander include files.
+# StringCommander_IDL_DIRS - Directories containing the StringCommander IDL files.
+# StringCommander_LIBRARIES - Libraries needed to use StringCommander.
+# StringCommander_DEFINITIONS - Compiler flags for StringCommander.
+# StringCommander_VERSION - The version of StringCommander found.
+# StringCommander_VERSION_MAJOR - The major version of StringCommander found.
+# StringCommander_VERSION_MINOR - The minor version of StringCommander found.
+# StringCommander_VERSION_REVISION - The revision version of StringCommander found.
+# StringCommander_VERSION_CANDIDATE - The candidate version of StringCommander found.
+
+message(STATUS "Found StringCommander-@PROJECT_VERSION@")
+set(StringCommander_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(StringCommander_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(StringCommander_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(StringCommander_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(StringCommander_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(StringCommander_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(StringCommander_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(StringCommander_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(StringCommander_VERSION @PROJECT_VERSION@)
+set(StringCommander_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(StringCommander_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(StringCommander_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(StringCommander_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
